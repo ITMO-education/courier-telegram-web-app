@@ -6,7 +6,7 @@ describe('AccountState', () => {
         const  id: string = "1";
         Login({id: id});
         const accountLogged = GetAccount();
-        expect(accountLogged.id).toEqual("2");
+        expect(accountLogged.id).toEqual("1");
     })
 
     it('🟢Unlogged', () => {
