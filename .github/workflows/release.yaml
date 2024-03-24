@@ -3,7 +3,7 @@ name: Image build
 on:
   push:
     branches:
-      - master
+      - main
 env:
   IMAGE_NAME: telegram-web-application
 
