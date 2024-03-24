@@ -1,12 +1,28 @@
-import './App.css';
-import { TonConnectButton } from '@tonconnect/ui-react';
+import cls from './App.module.css';
 
-function App() {
-    return (
-        <div>
-            <TonConnectButton />
-        </div>
-    );
+import {TonConnectButton} from '@tonconnect/ui-react';
+
+import {HomePage} from "./pages/HomePage.tsx";
+
+
+interface AppProps {
+    useTonAddress: () => string
+}
+
+function App({useTonAddress}: AppProps) {
+    let component: React.ReactElement;
+
+    if (useTonAddress() == "") {
+        component = (
+            <TonConnectButton/>
+        );
+    } else {
+        component = (<HomePage/>)
+    }
+
+    return <div className={cls.homeContainer}>
+        {component}
+    </div>
 }
 
 export default App
