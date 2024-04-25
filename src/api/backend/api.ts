@@ -19,7 +19,7 @@ export async function register({contract}: { contract: BackendContract }) {
 
 
 export async function listContracts({limit, offset}: { limit: number, offset: number }): Promise<BackendContract[]> {
-    let res: BackendContract[] = [];
+    const res: BackendContract[] = [];
     await fetch(
         `${backendApi}${contractURI}?limit=${limit}&offset=${offset}`,
         {
