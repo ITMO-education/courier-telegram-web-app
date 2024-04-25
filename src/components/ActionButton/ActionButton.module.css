@@ -1,0 +1,23 @@
+.ActionButtonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+
+    font: inherit;
+}
+
+.ActionButton {
+    border-radius: 100vh;
+    height: 100%;
+
+    min-width: min(9.5em, 148px);
+
+    margin: 0;
+
+    border: none;
+    justify-content: center;
+
+    font: inherit;
+}

@@ -1,10 +1,11 @@
-.homeContainer {
-    width: 100%;
-    height: 100%;
+.App {
+  width: fit-content;
+  height: 100%;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  min-width: 520px;
+  max-height: 680px;
+
+  border: var(--secondary-bg-color) solid;
+  background-color: var(--primary-bg-color);
+  border-radius: 5%;
 }
-
-
