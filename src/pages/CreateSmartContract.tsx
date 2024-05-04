@@ -4,7 +4,7 @@ import {SmartContract} from "../assets/svg/SmartContract.tsx";
 import {ActionButton} from "../components/ActionButton/ActionButton.tsx";
 import {Input} from "../components/Input/Input.tsx";
 import {TextInput} from "../components/Input/TextInput.tsx";
-import {PointOnMap} from "../assets/svg/PointOnMap.tsx";
+import {PointOnMapIcon} from "../assets/svg/PointOnMapIcon.tsx";
 import {TonIcon} from "../assets/svg/TonIcon.tsx";
 import {
     YMaps,
@@ -16,6 +16,7 @@ import {
 import {useEffect, useState} from "react";
 import {CreateContract} from "../service/CreateContract.ts";
 import {useTonConnectUI} from "@tonconnect/ui-react";
+import {MapWrapper} from "../components/Map/MapWrapper.tsx";
 
 export function CreateSmartContract() {
     const [tonConnectUI ] = useTonConnectUI();
@@ -214,16 +215,10 @@ function MapInput({setFrom, setTo}:{
     return (<div className={cls.MapContainer}>
         <div className={cls.InfoContainerHeader}>
             Map
-            <div className={cls.PointOnMapIcon}><PointOnMap/></div>
+            <div className={cls.PointOnMapIcon}><PointOnMapIcon/></div>
         </div>
         <div className={cls.Map}>
-            <YMaps query={
-                {
-                    apikey: "26bf80e8-684a-4cc9-b148-46fb455bbbe8", //TODO вынести в переменные
-                    lang: 'ru_RU',
-
-                }}
-            >
+            <MapWrapper>
                 <Map
                     style={{width: '100%', height: '100%'}}
                     defaultState={{center: [55.75, 37.57], zoom: 9}}
@@ -272,7 +267,7 @@ function MapInput({setFrom, setTo}:{
                         }}
 					/>}
                 </Map>
-            </YMaps>
+            </MapWrapper>
         </div>
     </div>)
 }

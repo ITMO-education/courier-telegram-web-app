@@ -16,6 +16,8 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
+
+    position: sticky;
 }
 
 .NameContainer {
@@ -43,6 +45,9 @@
 .PersonContainer {
     box-sizing: border-box;
     display: flex;
+
+    padding-bottom: 0.5em;
+    border-bottom: var(--thirdly-bg-color) dashed;
 }
 .Person {
     box-sizing: border-box;
@@ -55,6 +60,8 @@
     display: grid;
     grid-template-columns: 0.5fr 0.5fr;
     grid-template-rows: 1fr;
+    padding-bottom: 0.5em;
+    border-bottom: var(--thirdly-bg-color) dashed;
 }
 
 .Loading {

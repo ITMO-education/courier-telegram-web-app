@@ -8,4 +8,5 @@
   border: var(--secondary-bg-color) solid;
   background-color: var(--primary-bg-color);
   border-radius: 5%;
+  padding: 1em;
 }
