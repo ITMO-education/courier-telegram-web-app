@@ -22,15 +22,15 @@ export function HomePage() {
         })
 
     }, []);
-
+    const isUserCourier = useHookstate(isCourier()).get()
     return (
         <div className={cls.HomePage}>
             <div className={cls.Header}>
                 <div className={cls.HeaderSideElement}></div>
-                <div className={cls.HeaderTittle}>Call A Courier</div>
+                <div className={cls.HeaderTittle}>{isUserCourier? 'Select a request' : 'Call A Courier'}</div>
                 <div className={cls.HeaderSideElement}>
                     <div className={cls.ToggleButton}>
-                        <div className={cls.ToggleTittle}>Courier mode</div>
+                        <div className={cls.ToggleTittle}></div>
                         <div>
                             <Toggle
                                 id='courier-status'
@@ -60,7 +60,7 @@ export function HomePage() {
                     <TonConnectButton/>
                 </div>
                 {
-                    useHookstate(isCourier()).get() ?
+                        !isUserCourier?
                         <div className={cls.AddButton}>
                             <Link to={`/create`} style={{textDecoration: 'none'}}>
                                 <ActionButton text={"New contract"}/>
