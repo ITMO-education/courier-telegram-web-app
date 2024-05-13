@@ -84,13 +84,13 @@ export function CreateSmartContract() {
                 <div className={cls.InfoContainerSection} style={{flex: 2}}>
                     <div className={cls.ValueAndPaymentInputs}>
                         <TonInput
-                            headerName={"Declared value"}
+                            headerName={"Заявленная стоимость"}
                             onChange={setDeclaredValue}
 
                             errorMessage={"Value must be specified"}
                         />
                         <TonInput
-                            headerName={"Courier payment"}
+                            headerName={"Оплата курьеру"}
                             errorMessage={"Courier won't work for free"}
                             onChange={setCourierFeeValue}
                         />
@@ -104,7 +104,7 @@ export function CreateSmartContract() {
 
             <div className={cls.CommitContainer}>
                 <div className={cls.CommitButton}>
-                    <ActionButton text={"Sign"} action={commit} disabled={!isValid}/>
+                    <ActionButton text={"Подписать"} action={commit} disabled={!isValid}/>
                 </div>
             </div>
         </div>

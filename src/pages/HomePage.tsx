@@ -14,6 +14,8 @@ export function HomePage() {
 
     const [addrs, setContractAddresses] = useState<string[]>([])
 
+    const isUserCourier = useHookstate(isCourier()).get()
+
     useEffect(() => {
         listContracts({limit: 10, offset: 0}).then(r => {
             return r.map(c => c.tonAddress)
@@ -22,7 +24,7 @@ export function HomePage() {
         })
 
     }, []);
-    const isUserCourier = useHookstate(isCourier()).get()
+
     return (
         <div className={cls.HomePage}>
             <div className={cls.Header}>
@@ -31,10 +33,11 @@ export function HomePage() {
                 <div className={cls.HeaderSideElement}>
                     <div className={cls.ToggleButton}>
                         <div className={cls.ToggleTittle}></div>
-                        <div>
+                        <div className={cls.ToggleButton}>
+                            <a>Courier mode</a>
                             <Toggle
                                 id='courier-status'
-                                defaultChecked={isCourier().get()}
+                                defaultChecked={isUserCourier}
                                 onChange={(_) => {
                                     toggleIsCourier()
                                 }}/>

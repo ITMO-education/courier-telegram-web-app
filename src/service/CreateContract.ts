@@ -35,7 +35,6 @@ export const CreateContract = async (tonConnectUI: TonConnectUI, declaredValue: 
             throw 'no args init'
         }
 
-
         const stateInit = beginCell().store(storeStateInit(args.init)).endCell();
 
         await tonConnectUI.sendTransaction({
@@ -43,7 +42,7 @@ export const CreateContract = async (tonConnectUI: TonConnectUI, declaredValue: 
             messages: [
                 {
                     address: args.to.toRawString(),
-                    amount: toNano('0.01').toString(),
+                    amount: toNano('1.1').toString(),
                     payload: args.body.toBoc().toString('base64'),
                     stateInit: stateInit.toBoc().toString('base64'),
                 }

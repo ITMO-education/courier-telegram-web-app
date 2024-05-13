@@ -1,17 +1,27 @@
 import cls from './SmartContractInfo.module.css'
 
 import {currentContract} from "../state/CurrentContract.ts";
-import {GetStateName} from "../service/dictionary/ContractState.ts";
+import {GetStateName, StateCreated} from "../service/dictionary/ContractState.ts";
 import {fromNano} from "@ton/core";
 import {useHookstate} from "@hookstate/core";
 import {TonAddress} from "../components/TonAddress/TonAddress.tsx";
 import {ReturnButton} from "../components/ReturnButton/ReturnButton.tsx";
 import {MapWrapper} from "../components/Map/MapWrapper.tsx";
 import {Button, FullscreenControl, GeolocationControl, Map, Placemark, SearchControl} from "@pbe/react-yandex-maps";
+import {isCourier} from "../state/User.ts";
+import {ActionButton} from "../components/ActionButton/ActionButton.tsx";
+import {acceptContract} from "../service/AcceptContract.ts";
+import {TonConnectUI, useTonAddress, useTonConnectUI} from "@tonconnect/ui-react";
+import {SmartContract} from "../api/model/SmartContract.ts";
+import {depositToContract} from "../service/DepositToContract.ts";
+import {CO2} from "@itmo-education/courier-smart-contract";
 
 export function SmartContractInfo() {
 
     const info = useHookstate(currentContract).get()
+    const [tonConnectUI] = useTonConnectUI();
+    const isUserCourier = useHookstate(isCourier()).get()
+    const userAddress = useTonAddress(true)
 
     if (!info) {
         return (<div className={cls.Loading}>Smart contract not selected</div>)
@@ -48,6 +58,18 @@ export function SmartContractInfo() {
 
                 <ContractAddress
                     address={info.address}/>
+            </div>
+            <div className={cls.CourierButtonWrapper}>
+                {isUserCourier ?
+                    <CourierButton
+                        contract={info.address}
+                        tonConnectUI={tonConnectUI}
+                    />
+                    :
+                    <OwnerButton
+                        userAddress={userAddress}
+                        tonConnectUI={tonConnectUI}
+                        info={info}/>}
             </div>
         </div>
     )
@@ -151,4 +173,47 @@ function ContractMap({from, to}: { from: number[], to: number[] }) {
             </Map>
         </MapWrapper>
     )
+}
+
+function CourierButton({contract, tonConnectUI}: {
+    contract: string,
+    tonConnectUI: TonConnectUI,
+}) {
+    return (
+        <ActionButton
+            text={"Accept"}
+            action={async () => {
+                await acceptContract(tonConnectUI, contract)
+            }}
+        />
+    )
+}
+
+function OwnerButton(
+    {userAddress, info, tonConnectUI}:
+        {
+            userAddress: string,
+            info: SmartContract,
+            tonConnectUI: TonConnectUI
+        }) {
+
+    if (userAddress != info.ownerAddress) {
+        console.log(userAddress)
+        console.log(info.ownerAddress)
+        return <></>
+    }
+
+    if (info.state == StateCreated) {
+        return (
+            <ActionButton
+                text={"Deposit"}
+                action={
+                    () => {
+                        depositToContract(tonConnectUI, info.address, info.declaredValue + info.courierFee)
+                    }}
+            />
+        )
+    }
+
+    return (<></>)
 }

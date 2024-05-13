@@ -76,3 +76,8 @@
     font-size: 1.1em;
     padding: 0.5em 0.5em 0.5em 0;
 }
+
+.CourierButtonWrapper {
+    width: 100%;
+    min-height: 2em;
+}

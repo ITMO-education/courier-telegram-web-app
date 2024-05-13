@@ -4,14 +4,10 @@ import memoize from "lodash.memoize";
 import {SmartContract} from "../api/model/SmartContract.ts";
 import getTonClient from "../ton/GetTonClient.ts";
 import {fromTonPoint} from "../api/model/Point.ts";
+import {getSmartContract} from "./SmartContract.ts";
 
 const loadSmartContract = async (address: string): Promise<SmartContract | undefined> => {
-    const client = await getTonClient()
-    const contract =
-        client.open(
-            CO2.fromAddress(
-                Address.parse(address))) as OpenedContract<CO2>
-
+    const contract = await getSmartContract(address)
 
     const sc = {} as SmartContract
     sc.address = address
@@ -30,7 +26,7 @@ const loadSmartContract = async (address: string): Promise<SmartContract | undef
             }
         }),
 
-        contract.getDeliveryInfo().then((info)=> {
+        contract.getDeliveryInfo().then((info) => {
             sc.name = info.name
             sc.description = info.description
 

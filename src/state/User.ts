@@ -16,7 +16,6 @@ export function isCourier() {
 
 export function toggleIsCourier() {
     user.isCourier.set(!user.isCourier.get())
-    console.log(user.isCourier.get())
     localStorage.setItem(isCourierKey, String(user.isCourier.get()))
 }
 
