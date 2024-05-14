@@ -11,6 +11,7 @@ export async function LoadSmartContract(
     const sc = {} as SmartContract
 
     sc.address = address
+
     const totalInfo = await contract.getTotalInfo()
     sc.ownerAddress = totalInfo.owner.toString()
     sc.state = totalInfo.state

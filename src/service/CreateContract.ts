@@ -62,7 +62,6 @@ export const CreateContract = async (tonConnectUI: TonConnectUI, declaredValue: 
         })
     }
 
-
     await contract.send(
         {
             address: userAddress,
@@ -77,4 +76,5 @@ export const CreateContract = async (tonConnectUI: TonConnectUI, declaredValue: 
             queryId: 0n,
         }
     )
+    console.log(123)
 }

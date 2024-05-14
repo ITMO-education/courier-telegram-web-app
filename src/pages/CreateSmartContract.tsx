@@ -7,7 +7,6 @@ import {TextInput} from "../components/Input/TextInput.tsx";
 import {PointOnMapIcon} from "../assets/svg/PointOnMapIcon.tsx";
 import {TonIcon} from "../assets/svg/TonIcon.tsx";
 import {
-    YMaps,
     Map,
     FullscreenControl,
     GeolocationControl,
@@ -17,9 +16,10 @@ import {useEffect, useState} from "react";
 import {CreateContract} from "../service/CreateContract.ts";
 import {useTonConnectUI} from "@tonconnect/ui-react";
 import {MapWrapper} from "../components/Map/MapWrapper.tsx";
+import {redirect} from "react-router-dom";
 
 export function CreateSmartContract() {
-    const [tonConnectUI ] = useTonConnectUI();
+    const [tonConnectUI] = useTonConnectUI();
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -50,7 +50,6 @@ export function CreateSmartContract() {
     const commit = () => {
         if (!isValid) return
 
-
         CreateContract(
             tonConnectUI,
             declaredValue, courierFeeValue, name, description,
@@ -61,14 +60,16 @@ export function CreateSmartContract() {
                 lat: mapTo[0],
                 lon: mapTo[1],
             })
-
+            .then(() => {
+                document.location.href = document.location.origin
+            })
     }
 
     return (
         <div className={cls.CreateSmartContractContainer}>
             <div className={cls.HeaderContainer}>
                 <ReturnButton to={"/"}/>
-                <div className={cls.PageHeader}>Новый смарт-контракт</div>
+                    <div className={cls.PageHeader}>Новый смарт-контракт</div>
                 <SmartContract/>
             </div>
 
@@ -192,9 +193,9 @@ function TonInput({headerName, errorMessage, onChange}: {
     )
 }
 
-function MapInput({setFrom, setTo}:{
-    setFrom: (point: number[])=>void,
-    setTo: (point: number[])=>void,
+function MapInput({setFrom, setTo}: {
+    setFrom: (point: number[]) => void,
+    setTo: (point: number[]) => void,
 }) {
     const [mapMarkFrom, setMapMarkFrom] = useState<number[]>([])
     const [mapMarkTo, setMapMarkTo] = useState<number[]>([])
