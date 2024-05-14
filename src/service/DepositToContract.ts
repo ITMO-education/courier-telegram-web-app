@@ -4,6 +4,7 @@ import {TonConnectUI} from "@tonconnect/ui-react";
 import {getSmartContract} from "./SmartContract.ts";
 
 export async function depositToContract(tonConnectUI: TonConnectUI, address: string, amount: bigint) {
+    let _ = amount
 
     const contract = await getSmartContract(address)
 
@@ -13,9 +14,9 @@ export async function depositToContract(tonConnectUI: TonConnectUI, address: str
 
     const userAddress = Address.parse(tonConnectUI.account.address)
 
-    async function send(args: SenderArguments) {
-        console.log(args)
-        console.log(amount)
+    async function send(amount: SenderArguments) {
+            let _ = amount
+
     }
 
     contract.send(

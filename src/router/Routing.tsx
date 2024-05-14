@@ -4,7 +4,7 @@ import {HomePage} from "../pages/HomePage.tsx";
 import {createBrowserRouter} from "react-router-dom";
 import {currentContract} from "../state/CurrentContract.ts";
 import {CreateSmartContract} from "../pages/CreateSmartContract.tsx";
-import LoadContractInfo from "../service/LoadContractInfo.ts";
+import { LoadSmartContract } from "../service/LoadContractInfo.ts";
 import {SmartContract} from "../api/model/SmartContract.ts";
 
 export const router = createBrowserRouter([
@@ -17,10 +17,11 @@ export const router = createBrowserRouter([
         element: (<SmartContractInfo/>),
         loader: ({params}) => {
             if (!params.address) {
+
                 return null
             }
 
-            LoadContractInfo(
+            LoadSmartContract(
                 params.address,
                 (sc: SmartContract | undefined) =>  {
                     if(sc) {

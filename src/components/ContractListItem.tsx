@@ -4,7 +4,7 @@ import {GetStateName} from "../service/dictionary/ContractState.ts";
 import {useEffect, useState} from "react";
 import {SmartContract} from "../api/model/SmartContract.ts";
 import {TonAddress} from "./TonAddress/TonAddress.tsx";
-import LoadContractInfo from "../service/LoadContractInfo.ts";
+import {LoadSmartContract} from "../service/LoadContractInfo.ts";
 
 interface ContractListItemProps {
     contractAddressStr: string
@@ -18,7 +18,8 @@ export function ContractListItem({contractAddressStr}: ContractListItemProps) {
         if (info) {
             return
         }
-        LoadContractInfo(
+
+        LoadSmartContract(
             contractAddressStr,
             (sc: SmartContract | undefined) => {
                 if (sc) {

@@ -14,7 +14,7 @@ export async function acceptContract(tonConnectUI: TonConnectUI, address: string
     const userAddress = Address.parse(tonConnectUI.account.address)
 
     async function send(args: SenderArguments) {
-        console.log(args)
+        let _ = args;
     }
 
     contract.send(

@@ -198,8 +198,6 @@ function OwnerButton(
         }) {
 
     if (userAddress != info.ownerAddress) {
-        console.log(userAddress)
-        console.log(info.ownerAddress)
         return <></>
     }
 

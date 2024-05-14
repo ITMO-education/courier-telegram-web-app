@@ -1,9 +1,8 @@
-import memoize from "lodash.memoize";
 import {SmartContract} from "../api/model/SmartContract.ts";
 import {fromTonPoint} from "../api/model/Point.ts";
 import {getSmartContract} from "./SmartContract.ts";
 
-async function loadSmartContract(
+export async function LoadSmartContract(
     address: string,
     callback: (sc: SmartContract | undefined) => void,
 ) {
@@ -33,4 +32,4 @@ async function loadSmartContract(
     callback(sc)
 }
 
-export default memoize(loadSmartContract)
+
