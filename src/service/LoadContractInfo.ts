@@ -1,46 +1,36 @@
-import {CO2} from "@itmo-education/courier-smart-contract";
-import {Address, OpenedContract} from "@ton/core";
 import memoize from "lodash.memoize";
 import {SmartContract} from "../api/model/SmartContract.ts";
-import getTonClient from "../ton/GetTonClient.ts";
 import {fromTonPoint} from "../api/model/Point.ts";
 import {getSmartContract} from "./SmartContract.ts";
 
-const loadSmartContract = async (address: string): Promise<SmartContract | undefined> => {
+async function loadSmartContract(
+    address: string,
+    callback: (sc: SmartContract | undefined) => void,
+) {
     const contract = await getSmartContract(address)
 
     const sc = {} as SmartContract
+
     sc.address = address
-    try {
-        sc.state = await contract.getState()
-    } catch (e) {
-        return undefined
+    const totalInfo = await contract.getTotalInfo()
+    sc.ownerAddress = totalInfo.owner.toString()
+    sc.state = totalInfo.state
+    if (totalInfo.courier) {
+        sc.courierAddress = totalInfo.courier.toString()
     }
 
-    return Promise.all([
-        contract.getOwner().then((owner) => sc.ownerAddress = owner.toString()),
+    sc.name = totalInfo.short.name
+    sc.description = totalInfo.short.description
 
-        contract.getCourier().then((courier) => {
-            if (courier) {
-                sc.courierAddress = courier.toString()
-            }
-        }),
+    sc.courierFee = totalInfo.short.courierFee
 
-        contract.getDeliveryInfo().then((info) => {
-            sc.name = info.name
-            sc.description = info.description
+    sc.declaredValue = totalInfo.short.declaredSum
 
-            sc.courierFee = info.courierFee
+    sc.to = fromTonPoint(totalInfo.short.to)
+    sc.from = fromTonPoint(totalInfo.short.from)
 
-            sc.declaredValue = info.declaredSum
 
-            sc.to = fromTonPoint(info.to)
-            sc.from = fromTonPoint(info.from)
-        })
-    ]).then(() => {
-        return sc
-    })
+    callback(sc)
 }
-
 
 export default memoize(loadSmartContract)

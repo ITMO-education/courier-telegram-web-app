@@ -28,7 +28,7 @@ export function SmartContractInfo() {
     }
 
     if (!info.address) {
-        return (<div className={cls.Loading}>Loading...</div>)
+        return (<div className={cls.Loading}>Загрузка данных...</div>)
     }
 
     return (
@@ -79,7 +79,7 @@ function ContractAddress({address}: { address: string }) {
     return (
         <div>
             <div className={cls.InfoSectionName}>
-                Contract:
+                Адрес контракта:
             </div>
             <TonAddress address={address}/>
         </div>
@@ -95,13 +95,13 @@ function ValueInfo({declaredValue, courierFee}: {
         <div className={cls.ValueContainer}>
             <div>
                 <div className={cls.InfoSectionName}>
-                    Declared Value:
+                    Заявленная ценность:
                 </div>
                 {fromNano(declaredValue ? declaredValue : 0n)} Ton
             </div>
             <div>
                 <div className={cls.InfoSectionName}>
-                    Courier fee:
+                    Курьерский сбор:
                 </div>
                 {fromNano(courierFee ? courierFee : 0n)} Ton
             </div>
@@ -117,13 +117,13 @@ function PersonInfo({ownerAddress, courierAddress}: {
         <div className={cls.PersonContainer}>
             <div className={cls.Person}>
                 <div className={cls.InfoSectionName}>
-                    Owner:
+                    Владелец:
                 </div>
                 <TonAddress address={ownerAddress}/>
             </div>
             <div className={cls.Person}>
                 <div className={cls.InfoSectionName}>
-                    Courier:
+                    Курьер:
                 </div>
                 <TonAddress address={courierAddress || "Not selected"}/>
             </div>
@@ -135,7 +135,7 @@ function TextInfo({description}: { description: string }) {
     return (
         <div>
             <div className={cls.InfoSectionName}>
-                Description:
+                Описание:
             </div>
             <div className={cls.DescriptionContainer}>
                 {description}
@@ -181,7 +181,7 @@ function CourierButton({contract, tonConnectUI}: {
 }) {
     return (
         <ActionButton
-            text={"Accept"}
+            text={"Принять заказ"}
             action={async () => {
                 await acceptContract(tonConnectUI, contract)
             }}

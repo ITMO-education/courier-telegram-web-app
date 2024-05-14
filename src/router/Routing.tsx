@@ -5,6 +5,7 @@ import {createBrowserRouter} from "react-router-dom";
 import {currentContract} from "../state/CurrentContract.ts";
 import {CreateSmartContract} from "../pages/CreateSmartContract.tsx";
 import LoadContractInfo from "../service/LoadContractInfo.ts";
+import {SmartContract} from "../api/model/SmartContract.ts";
 
 export const router = createBrowserRouter([
     {
@@ -14,17 +15,18 @@ export const router = createBrowserRouter([
     {
         path: "/contract/:address",
         element: (<SmartContractInfo/>),
-        loader: ({ params}) => {
+        loader: ({params}) => {
             if (!params.address) {
                 return null
             }
 
-            LoadContractInfo(params.address).then((res)=> {
-                if (res) {
-                    currentContract.set(res)
-                }
-
-            })
+            LoadContractInfo(
+                params.address,
+                (sc: SmartContract | undefined) =>  {
+                    if(sc) {
+                        currentContract.set(sc)
+                    }
+                })
             return null
         }
     },

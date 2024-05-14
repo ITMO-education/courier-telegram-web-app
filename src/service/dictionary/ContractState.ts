@@ -9,16 +9,13 @@ export const StateCanceledByCourier = 7n;
 
 const m = new Map<bigint, string>()
 
-m.set(StateCreated, "Created")
-m.set(StatePayed, "Payed")
-m.set(StateFoundCourier, "FoundCourier")
-m.set(StatePickedUp, "PickedUp")
-m.set(StateDelivered, "Delivered")
-m.set(StateCanceledByOwner, "CanceledByOwner")
-m.set(StateCanceledByCourier, "CanceledByCourier")
-
-
-
+m.set(StateCreated, "Требуется оплата")
+m.set(StatePayed, "Ищем курьера")
+m.set(StateFoundCourier, "Курьер забирает")
+m.set(StatePickedUp, "Курьер везёт к Вам")
+m.set(StateDelivered, "Доставлено")
+m.set(StateCanceledByOwner, "Отменено")
+m.set(StateCanceledByCourier, "Отменено курьером")
 
 export function GetStateName(state: bigint) :string {
     let stateName = m.get(state)

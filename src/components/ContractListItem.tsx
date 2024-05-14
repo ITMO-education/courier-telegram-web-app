@@ -12,22 +12,23 @@ interface ContractListItemProps {
 
 export function ContractListItem({contractAddressStr}: ContractListItemProps) {
     const [info, setInfo] =
-        useState<SmartContract|undefined>()
+        useState<SmartContract | undefined>()
 
     useEffect(() => {
-        if (info){
+        if (info) {
             return
         }
-        LoadContractInfo(contractAddressStr).then(
-            (res)=> {
-                if (res) {
-                    setInfo(res)
+        LoadContractInfo(
+            contractAddressStr,
+            (sc: SmartContract | undefined) => {
+                if (sc) {
+                    setInfo(sc)
                 }
             })
     }, []);
 
     if (!info) {
-        return (<div className={cls.ContractListItem}>Loading</div>)
+        return (<div className={cls.ContractListItem}>Загрузка данных...</div>)
     }
 
     return (

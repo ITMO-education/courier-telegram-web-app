@@ -68,7 +68,7 @@ export function CreateSmartContract() {
         <div className={cls.CreateSmartContractContainer}>
             <div className={cls.HeaderContainer}>
                 <ReturnButton to={"/"}/>
-                <div className={cls.PageHeader}>New Smart contract</div>
+                <div className={cls.PageHeader}>Новый смарт-контракт</div>
                 <SmartContract/>
             </div>
 
@@ -119,7 +119,7 @@ function NameInput({setName}: {
 
     return (
         <div className={cls.NameInputSection}>
-            <div className={cls.InfoContainerHeader} children={"Name:"}/>
+            <div className={cls.InfoContainerHeader} children={"Наименование:"}/>
             <div className={cls.Input}>
                 <Input
                     onChange={(change) => {
@@ -144,7 +144,7 @@ function DescriptionInput({setDescription}: {
         <div className={cls.DescriptionSection}>
             <div
                 className={cls.InfoContainerHeader}
-                children={"Description:"}
+                children={"Описание:"}
             />
             <div className={cls.DescriptionInput}
                  children={<TextInput
@@ -214,7 +214,7 @@ function MapInput({setFrom, setTo}:{
 
     return (<div className={cls.MapContainer}>
         <div className={cls.InfoContainerHeader}>
-            Map
+            Карта
             <div className={cls.PointOnMapIcon}><PointOnMapIcon/></div>
         </div>
         <div className={cls.Map}>

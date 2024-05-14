@@ -17,11 +17,16 @@ export async function register({contract}: { contract: BackendContract }) {
         })
 }
 
+interface listContractsReq {
+    limit: number
+    offset: number
+    owner?: string
+}
 
-export async function listContracts({limit, offset}: { limit: number, offset: number }): Promise<BackendContract[]> {
+export async function listContracts({limit, offset, owner}: listContractsReq): Promise<BackendContract[]> {
     const res: BackendContract[] = [];
     await fetch(
-        `${backendApi}${contractURI}?limit=${limit}&offset=${offset}`,
+        `${backendApi}${contractURI}?limit=${limit}&offset=${offset}`+(owner ? `&owner=${owner}`: ``),
         {
             method: 'GET',
             headers: {
