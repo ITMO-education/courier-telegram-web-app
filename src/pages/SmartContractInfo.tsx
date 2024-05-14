@@ -22,7 +22,7 @@ export function SmartContractInfo() {
     const [tonConnectUI] = useTonConnectUI();
     const isUserCourier = useHookstate(isCourier()).get()
     const userAddress = useTonAddress(true)
-console.log(userAddress)
+
     if (!info) {
         return (<div className={cls.Loading}>Smart contract not selected</div>)
     }
@@ -198,9 +198,8 @@ function OwnerButton(
         }) {
 
 
-
-    const userAddr = Address.parse(userAddress).toString({ bounceable:true, testOnly:false})
-    const ownerAddr = Address.parse(info.ownerAddress).toString({ bounceable:true, testOnly:false})
+    const userAddr = Address.parse(userAddress).toString({})
+    const ownerAddr = Address.parse(info.ownerAddress).toString({})
 
     if (userAddr != ownerAddr) {
         return <></>
