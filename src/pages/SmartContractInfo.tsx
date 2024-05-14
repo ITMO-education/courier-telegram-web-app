@@ -2,7 +2,7 @@ import cls from './SmartContractInfo.module.css'
 
 import {currentContract} from "../state/CurrentContract.ts";
 import {GetStateName, StateCreated} from "../service/dictionary/ContractState.ts";
-import {fromNano} from "@ton/core";
+import {Address, fromNano} from "@ton/core";
 import {useHookstate} from "@hookstate/core";
 import {TonAddress} from "../components/TonAddress/TonAddress.tsx";
 import {ReturnButton} from "../components/ReturnButton/ReturnButton.tsx";
@@ -22,7 +22,7 @@ export function SmartContractInfo() {
     const [tonConnectUI] = useTonConnectUI();
     const isUserCourier = useHookstate(isCourier()).get()
     const userAddress = useTonAddress(true)
-
+console.log(userAddress)
     if (!info) {
         return (<div className={cls.Loading}>Smart contract not selected</div>)
     }
@@ -197,14 +197,19 @@ function OwnerButton(
             tonConnectUI: TonConnectUI
         }) {
 
-    if (userAddress != info.ownerAddress) {
+
+
+    const userAddr = Address.parse(userAddress).toString({ bounceable:true, testOnly:false})
+    const ownerAddr = Address.parse(info.ownerAddress).toString({ bounceable:true, testOnly:false})
+
+    if (userAddr != ownerAddr) {
         return <></>
     }
 
-    if (info.state == StateCreated) {
+    if (info.state === StateCreated) {
         return (
             <ActionButton
-                text={"Deposit"}
+                text={"Оплатить"}
                 action={
                     () => {
                         depositToContract(tonConnectUI, info.address, info.declaredValue + info.courierFee)

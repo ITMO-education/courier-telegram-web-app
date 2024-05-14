@@ -47,6 +47,7 @@
     height: 100%;
     padding: 1em;
 
+    overflow-y: scroll;
 
     display: flex;
     flex-direction: column;

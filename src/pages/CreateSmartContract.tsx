@@ -14,13 +14,12 @@ import {
 } from "@pbe/react-yandex-maps";
 import {useEffect, useState} from "react";
 import {CreateContract} from "../service/CreateContract.ts";
-import {useTonConnectUI} from "@tonconnect/ui-react";
+import {useTonAddress, useTonConnectUI} from "@tonconnect/ui-react";
 import {MapWrapper} from "../components/Map/MapWrapper.tsx";
-import {redirect} from "react-router-dom";
 
 export function CreateSmartContract() {
     const [tonConnectUI] = useTonConnectUI();
-
+    const userAccountAddr = useTonAddress()
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [declaredValue, setDeclaredValue] = useState(0);
@@ -88,11 +87,11 @@ export function CreateSmartContract() {
                             headerName={"Заявленная стоимость"}
                             onChange={setDeclaredValue}
 
-                            errorMessage={"Value must be specified"}
+                            errorMessage={"Значение должно быть заполненным"}
                         />
                         <TonInput
                             headerName={"Оплата курьеру"}
-                            errorMessage={"Courier won't work for free"}
+                            errorMessage={"Курьер не будет доставлять бесплатно :("}
                             onChange={setCourierFeeValue}
                         />
                     </div>

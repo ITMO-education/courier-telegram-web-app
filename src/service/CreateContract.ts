@@ -42,7 +42,7 @@ export const CreateContract = async (tonConnectUI: TonConnectUI, declaredValue: 
             messages: [
                 {
                     address: args.to.toRawString(),
-                    amount: toNano('1.1').toString(),
+                    amount: toNano('0.2').toString(),
                     payload: args.body.toBoc().toString('base64'),
                     stateInit: stateInit.toBoc().toString('base64'),
                 }
@@ -68,7 +68,7 @@ export const CreateContract = async (tonConnectUI: TonConnectUI, declaredValue: 
             send: send,
         },
         {
-            value: toNano('1.1'),
+            value: toNano('0.2'),
             bounce: true
         },
         {

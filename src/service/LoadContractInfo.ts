@@ -11,8 +11,21 @@ export async function LoadSmartContract(
     const sc = {} as SmartContract
 
     sc.address = address
+    let  totalInfo;
+    try {
+        totalInfo = await contract.getTotalInfo()
+    } catch (e) {
+        if (!e) {
+            console.error(e)
+            return
+        }
 
-    const totalInfo = await contract.getTotalInfo()
+        if (e.toString() == 'Error: Exit code: -256') {
+
+        }
+        return
+    }
+
     sc.ownerAddress = totalInfo.owner.toString()
     sc.state = totalInfo.state
     if (totalInfo.courier) {
