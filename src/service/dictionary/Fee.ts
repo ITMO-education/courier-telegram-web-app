@@ -1,2 +1,3 @@
+import {toNano} from "@ton/core";
 
-export const OperationFee = 0.5
+export const OperationFee = toNano(0.01)

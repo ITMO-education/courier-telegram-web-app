@@ -1,7 +1,7 @@
 import cls from './SmartContractInfo.module.css'
 
 import {currentContract} from "../state/CurrentContract.ts";
-import {GetStateName, StateCreated} from "../service/dictionary/ContractState.ts";
+import {GetStateName, StateCreated, StateFoundCourier, StatePayed} from "../service/dictionary/ContractState.ts";
 import {Address, fromNano} from "@ton/core";
 import {useHookstate} from "@hookstate/core";
 import {TonAddress} from "../components/TonAddress/TonAddress.tsx";
@@ -15,6 +15,8 @@ import {TonConnectUI, useTonAddress, useTonConnectUI} from "@tonconnect/ui-react
 import {SmartContract} from "../api/model/SmartContract.ts";
 import {depositToContract} from "../service/DepositToContract.ts";
 import {CO2} from "@itmo-education/courier-smart-contract";
+import {SmartContractAction} from "tonapi-sdk-js";
+import {packageTaken} from "../service/PackageTaken.ts";
 
 export function SmartContractInfo() {
 
@@ -62,7 +64,7 @@ export function SmartContractInfo() {
             <div className={cls.CourierButtonWrapper}>
                 {isUserCourier ?
                     <CourierButton
-                        contract={info.address}
+                        contract={info}
                         tonConnectUI={tonConnectUI}
                     />
                     :
@@ -85,7 +87,6 @@ function ContractAddress({address}: { address: string }) {
         </div>
     )
 }
-
 
 function ValueInfo({declaredValue, courierFee}: {
     declaredValue: bigint | undefined,
@@ -176,17 +177,30 @@ function ContractMap({from, to}: { from: number[], to: number[] }) {
 }
 
 function CourierButton({contract, tonConnectUI}: {
-    contract: string,
+    contract: SmartContract,
     tonConnectUI: TonConnectUI,
 }) {
-    return (
-        <ActionButton
-            text={"Принять заказ"}
-            action={async () => {
-                await acceptContract(tonConnectUI, contract)
-            }}
-        />
-    )
+    if (contract.state == StatePayed) {
+        return (
+            <ActionButton
+                text={"Принять заказ"}
+                action={async () => {
+                    await acceptContract(tonConnectUI, contract)
+                }}
+            />
+        )
+    }
+
+    if (contract.state == StateFoundCourier) {
+        return (
+            <ActionButton
+                text={"Забрал заказ"}
+                action={async () => {
+                    await packageTaken(tonConnectUI, contract)
+                }}
+            />
+        )
+    }
 }
 
 function OwnerButton(
@@ -210,8 +224,8 @@ function OwnerButton(
             <ActionButton
                 text={"Оплатить"}
                 action={
-                    () => {
-                        depositToContract(tonConnectUI, info)
+                   async () => {
+                        await depositToContract(tonConnectUI, info)
                     }}
             />
         )

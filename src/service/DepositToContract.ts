@@ -12,10 +12,11 @@ export async function depositToContract(tonConnectUI: TonConnectUI, sc: SmartCon
     if (tonConnectUI.account == null) {
         throw 'no account to send from'
     }
+    console.log(tonConnectUI.account.address)
 
     const userAddress = Address.parse(tonConnectUI.account.address)
 
-    const amount = sc.courierFee+sc.declaredValue+toNano(OperationFee);
+    const amount = sc.courierFee+sc.declaredValue+OperationFee;
 
     async function send(args: SenderArguments) {
         if (!args.body) {

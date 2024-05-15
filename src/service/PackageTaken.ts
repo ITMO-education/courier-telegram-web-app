@@ -1,11 +1,11 @@
-import {Address, beginCell, OpenedContract, SenderArguments, storeStateInit, toNano} from "@ton/core";
+import {Address, SenderArguments, toNano} from "@ton/core";
 import memoize from "lodash.memoize";
 import {TonConnectUI} from "@tonconnect/ui-react";
 import {getSmartContract} from "./SmartContract.ts";
 import {OperationFee} from "./dictionary/Fee.ts";
 import {SmartContract} from "../api/model/SmartContract.ts";
 
-export async function acceptContract(tonConnectUI: TonConnectUI, sc: SmartContract) {
+export async function packageTaken(tonConnectUI: TonConnectUI, sc: SmartContract) {
 
     const contract = await getSmartContract(sc.address)
 
@@ -14,8 +14,6 @@ export async function acceptContract(tonConnectUI: TonConnectUI, sc: SmartContra
     }
 
     const userAddress = Address.parse(tonConnectUI.account.address)
-
-    const amount = sc.courierFee+sc.declaredValue+OperationFee;
 
     async function send(args: SenderArguments) {
         if (!args.body) {
@@ -40,12 +38,12 @@ export async function acceptContract(tonConnectUI: TonConnectUI, sc: SmartContra
             send: send,
         },
         {
-            value: amount,
+            value: OperationFee,
             bounce: false
         },
-        'accept',
+        'pickup',
     )
 }
 
 
-export default memoize(acceptContract)
+export default memoize(packageTaken)
