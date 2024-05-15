@@ -1,12 +1,13 @@
-import {Address, beginCell, OpenedContract, SenderArguments, storeStateInit, toNano} from "@ton/core";
+import {Address, SenderArguments, Sender, toNano} from "@ton/core";
 import memoize from "lodash.memoize";
 import {TonConnectUI} from "@tonconnect/ui-react";
 import {getSmartContract} from "./SmartContract.ts";
+import {SmartContract} from "../api/model/SmartContract.ts";
+import {OperationFee} from "./dictionary/Fee.ts";
+import TonConnect from '@tonconnect/sdk';
+export async function depositToContract(tonConnectUI: TonConnectUI, sc: SmartContract) {
 
-export async function depositToContract(tonConnectUI: TonConnectUI, address: string, amount: bigint) {
-    let _ = amount
-
-    const contract = await getSmartContract(address)
+    const contract = await getSmartContract(sc.address)
 
     if (tonConnectUI.account == null) {
         throw 'no account to send from'
@@ -14,9 +15,23 @@ export async function depositToContract(tonConnectUI: TonConnectUI, address: str
 
     const userAddress = Address.parse(tonConnectUI.account.address)
 
-    async function send(amount: SenderArguments) {
-            let _ = amount
+    const amount = sc.courierFee+sc.declaredValue+toNano(OperationFee);
 
+    async function send(args: SenderArguments) {
+        if (!args.body) {
+            throw 'no body'
+        }
+
+        await tonConnectUI.sendTransaction({
+                validUntil:  Math.floor(Date.now() / 1000) + 360,
+                messages: [
+                    {
+                        address: args.to.toRawString(),
+                        amount: args.value.toString(),
+                        payload: args.body.toBoc().toString('base64'),
+                    }
+                ]
+            })
     }
 
     contract.send(
@@ -25,10 +40,10 @@ export async function depositToContract(tonConnectUI: TonConnectUI, address: str
             send: send,
         },
         {
-            value: toNano('1.1'),
-            bounce: true
+            value: amount,
+            bounce: false
         },
-        'accept',
+        'start',
     )
 }
 

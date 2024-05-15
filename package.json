@@ -19,6 +19,7 @@
     "@ton/core": "^0.56.3",
     "@ton/crypto": "^3.2.0",
     "@ton/ton": "^13.11.1",
+    "@tonconnect/sdk": "^3.0.2",
     "@tonconnect/ui-react": "^2.0.0",
     "execution-queue": "^1.0.1",
     "lodash.memoize": "^4.1.2",

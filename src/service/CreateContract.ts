@@ -69,7 +69,7 @@ export const CreateContract = async (tonConnectUI: TonConnectUI, declaredValue: 
         },
         {
             value: toNano('0.2'),
-            bounce: true
+            bounce: false
         },
         {
             $$type: 'Deploy',

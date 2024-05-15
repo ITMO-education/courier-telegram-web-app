@@ -211,7 +211,7 @@ function OwnerButton(
                 text={"Оплатить"}
                 action={
                     () => {
-                        depositToContract(tonConnectUI, info.address, info.declaredValue + info.courierFee)
+                        depositToContract(tonConnectUI, info)
                     }}
             />
         )

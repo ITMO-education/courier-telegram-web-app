@@ -36,7 +36,6 @@ export async function LoadSmartContract(
     sc.description = totalInfo.short.description
 
     sc.courierFee = totalInfo.short.courierFee
-
     sc.declaredValue = totalInfo.short.declaredSum
 
     sc.to = fromTonPoint(totalInfo.short.to)
