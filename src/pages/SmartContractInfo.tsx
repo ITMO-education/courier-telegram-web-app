@@ -1,7 +1,13 @@
 import cls from './SmartContractInfo.module.css'
 
 import {currentContract} from "../state/CurrentContract.ts";
-import {GetStateName, StateCreated, StateFoundCourier, StatePayed} from "../service/dictionary/ContractState.ts";
+import {
+    GetStateName,
+    StateCreated,
+    StateFoundCourier,
+    StatePayed,
+    StatePickedUp
+} from "../service/dictionary/ContractState.ts";
 import {Address, fromNano} from "@ton/core";
 import {useHookstate} from "@hookstate/core";
 import {TonAddress} from "../components/TonAddress/TonAddress.tsx";
@@ -14,9 +20,8 @@ import {acceptContract} from "../service/AcceptContract.ts";
 import {TonConnectUI, useTonAddress, useTonConnectUI} from "@tonconnect/ui-react";
 import {SmartContract} from "../api/model/SmartContract.ts";
 import {depositToContract} from "../service/DepositToContract.ts";
-import {CO2} from "@itmo-education/courier-smart-contract";
-import {SmartContractAction} from "tonapi-sdk-js";
 import {packageTaken} from "../service/PackageTaken.ts";
+import {commitDelivery} from "../service/CommitDelivery.ts";
 
 export function SmartContractInfo() {
 
@@ -201,6 +206,8 @@ function CourierButton({contract, tonConnectUI}: {
             />
         )
     }
+
+    return (<></>)
 }
 
 function OwnerButton(
@@ -226,6 +233,18 @@ function OwnerButton(
                 action={
                    async () => {
                         await depositToContract(tonConnectUI, info)
+                    }}
+            />
+        )
+    }
+
+    if (info.state === StatePickedUp) {
+        return (
+            <ActionButton
+                text={"Подтвердить доставку"}
+                action={
+                    async () => {
+                        await commitDelivery(tonConnectUI, info)
                     }}
             />
         )

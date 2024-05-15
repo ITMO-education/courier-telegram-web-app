@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@hookstate/core": "^4.0.1",
-    "@itmo-education/courier-smart-contract": "npm:@ITMO-education/courier-smart-contract@^0.0.11",
+    "@itmo-education/courier-smart-contract": "npm:@ITMO-education/courier-smart-contract@^0.0.12",
     "@pbe/react-yandex-maps": "^1.2.5",
     "@shelex/promise-queue-timeout": "^1.0.3",
     "@tanuel/async-queue": "^1.0.1",
