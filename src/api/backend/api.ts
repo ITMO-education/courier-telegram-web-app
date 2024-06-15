@@ -1,6 +1,5 @@
 import {BackendContract} from "./BackendContract.ts";
 
-// `http://localhost:8080`
 const backendApi = import.meta.env.VITE_BACKEND_URL
 
 const contractURI = '/contract'

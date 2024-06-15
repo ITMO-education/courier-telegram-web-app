@@ -15,7 +15,7 @@ export async function acceptContract(tonConnectUI: TonConnectUI, sc: SmartContra
 
     const userAddress = Address.parse(tonConnectUI.account.address)
 
-    const amount = sc.courierFee+sc.declaredValue+OperationFee;
+    const amount = sc.declaredValue+OperationFee;
 
     async function send(args: SenderArguments) {
         if (!args.body) {

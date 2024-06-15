@@ -250,7 +250,7 @@ function MapInput({setFrom, setTo}: {
                                 maxWidth: 240,
                             }}
 							data={{
-                                content: selectingPointFrom ? "Select destination point" : "Change departure point",
+                                content: selectingPointFrom ? "Выберите точку отправления" : "Выберите точку доставки",
                             }}
 							state={{
                                 selected: !selectingPointFrom,

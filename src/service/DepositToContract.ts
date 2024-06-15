@@ -16,7 +16,7 @@ export async function depositToContract(tonConnectUI: TonConnectUI, sc: SmartCon
 
     const userAddress = Address.parse(tonConnectUI.account.address)
 
-    const amount = sc.courierFee+sc.declaredValue+OperationFee;
+    const amount = sc.courierFee+OperationFee;
 
     async function send(args: SenderArguments) {
         if (!args.body) {
