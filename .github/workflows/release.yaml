@@ -47,12 +47,12 @@ jobs:
   release-pages:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - name: Authorize
+        run: echo  "//npm.pkg.github.com/:_authToken=${{secrets.GITHUB_TOKEN}}" > .npmrc
+      - uses: actions/setup-node@v4
         with:
-          version:  20.5.0
-
-      - name: Build
+          node-version: 21
         run: |
           npm install
           npm run build
