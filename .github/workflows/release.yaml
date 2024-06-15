@@ -8,7 +8,7 @@ env:
   IMAGE_NAME: telegram-web-application
 
 jobs:
-  push:
+  release-image:
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -43,3 +43,21 @@ jobs:
           echo VERSION=$VERSION
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
+
+  release-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          version:  20.5.0
+
+      - name: Build
+        run: |
+          npm install
+          npm run build
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
