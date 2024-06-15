@@ -8,6 +8,6 @@ export default ({mode}) => {
 
     return defineConfig({
         plugins: [react(), nodePolyfills()],
-        base: '/',
+        base: '/courier-telegram-web-app',
     });
 }
